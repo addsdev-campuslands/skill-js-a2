@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terremotos BBB</title>
+    <script type="module" src="components/errorcomponent.js" defer></script>
+    <script type="module" src="components/countercomponent.js" defer></script>
+    <script type="module" src="app.js" defer></script>
+    <link rel="stylesheet" href="resources/css/style.css">
+</head>
+<body>
+    <h1>Terremotos</h1>
+    <div class="sub">Busqueda de Terremotos por range fechas (USGS)</div>
+    <section class="toolbar">
+        <div class="filters">
+            <div class="field">
+                <label for="rangeSelect">Rango</label>
+                <select name="rangeSelect" id="rangeSelect">
+                    <option value="last1">Ultimas 24 horas</option>
+                    <option value="last7" selected>Ultimos 7 dias</option>
+                    <option value="last30"> Ultimos 30 dias</option>
+                    <option value="custom">Personalizado...</option>
+                </select>
+            </div>
+            <div class="row" id="customRow" style="display: none;">
+                <div class="field">
+                    <label for="startDate">Desde</label>
+                    <input type="date" name="startDate" id="startDate">
+                </div>
+                <div class="field">
+                    <label for="endDate">Hasta</label>
+                    <input type="date" name="endDate" id="endDate">
+                </div>
+            </div>
+        </div>
+        <div>
+            <button id="btnSearch">Buscar</button>
+        </div>
+    </section>
+
+    <section class="stats" id="stats"></section>
+    <section class="grid" id="grid"></section>
+    <section class="pager" id="pager">
+        <button id="prevBtn">&laquo; Anterior</button>
+        <span id="pageInfo" class="chip"> Pagina 1 / 1</span>
+        <button id="nextBtn">Siguiente &raquo;</button>
+    </section>
+    <section id="messages"></section>
+    <error-component></error-component>
+    <counter-custom></counter-custom>
+</body>
