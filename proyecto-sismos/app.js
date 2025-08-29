@@ -23,6 +23,27 @@ const state = {
     page: 1
 }
 
+
+function computeStats(events) {
+    const total = events.length
+    const typeCounts = {}
+
+    let sum = 0, count = 0, max = null;
+
+    events.forEach(e => {
+        typeCounts[e.type] = (typeCounts[e.type] ?? 0) + 1
+        if( typeof e.mag === "number") {
+            sum += e.mag; count += 1;
+            max = (max == null) ? e.mag: Math.max(max, e.mag)
+        }
+    })
+
+    const avg = count ? +(sum/count).toFixed(2) : null
+    const maxMag = max == null ? null : +max.toFixed(2)
+
+    return {total, types: typeCounts, avgMag: avg, maxMag}
+}
+
 function formatDate(d) {
     // YYYY-MM-DD 2025-08-27
     const y = d.getFullYear();//2025
@@ -175,6 +196,19 @@ btntSearch.addEventListener('click', async () => {
 })
 
 
+window.addEventListener('eq:history:select' , async(e) => {
+     const {start, end} = e.detail ?? {}
+    if(!start || !end) {return }
+
+    //Asignarle valores UI
+    selRange.value = 'custom'
+    customRow.style.display = 'grid'
+    startInput.value = start
+    endInput.value = end
+    await loadAndRender({start, end})
+})
+
+
 async function loadAndRender({start, end}) {
     setLoading(true)
     showMessage()
@@ -188,6 +222,11 @@ async function loadAndRender({start, end}) {
 
         renderStats(events)
         renderCards()
+
+        const stats = computeStats(events)
+        console.log(stats);
+        
+        window.dispatchEvent(new CustomEvent('eq:search:completed', { detail: { start, end, stats}}))
     }catch(err) {
         console.error(err)
         showMessage("error", "Ocurrio algo, lo mas probables es el error este entre la pantalla y la silla")

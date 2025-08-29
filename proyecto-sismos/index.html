@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Terremotos BBB</title>
     <script type="module" src="components/errorcomponent.js" defer></script>
     <script type="module" src="components/countercomponent.js" defer></script>
+    <script type="module" src="components/eq-history.js" defer></script>
     <script type="module" src="app.js" defer></script>
     <link rel="stylesheet" href="resources/css/style.css">
 </head>
+
 <body>
     <h1>Terremotos</h1>
     <div class="sub">Busqueda de Terremotos por range fechas (USGS)</div>
@@ -47,6 +50,8 @@
         <button id="nextBtn">Siguiente &raquo;</button>
     </section>
     <section id="messages"></section>
-    <error-component></error-component>
-    <counter-custom></counter-custom>
+    <!-- Historial de Busquedas -->
+    <eq-history></eq-history>
+    <!-- <error-component></error-component> -->
+    <!-- <counter-custom></counter-custom> -->
 </body>
